@@ -31,4 +31,13 @@ public class CricketAnalyserTest {
         } catch (CricketAnalyserException e) {
         }
     }
+
+    @Test
+    public void givenIPLRunsCSVFile_ShouldReturn_TopStrikeRate() {
+        CricketAnalyser cricketAnalyser = new CricketAnalyser();
+        cricketAnalyser.loadIPLRunsCSVData(IPL_RUNS_CENSUS_CSV_FILE_PATH);
+        String sortedStrikeRate = cricketAnalyser.getSortedStrikeRate();
+        IPLRunsCSV[] topStrikeRate = new Gson().fromJson(sortedStrikeRate, IPLRunsCSV[].class);
+        Assert.assertEquals(333.33,topStrikeRate[0].sr,0.0d);
+    }
 }

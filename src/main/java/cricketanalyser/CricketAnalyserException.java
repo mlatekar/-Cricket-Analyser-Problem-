@@ -1,6 +1,6 @@
 package cricketanalyser;
 
-public class CricketAnalyserException extends Exception {
+public class CricketAnalyserException extends RuntimeException {
     enum ExceptionType {
         NO_CENSUS_DATA, IPL_CENSUS_FILE_PROBLEM
     }

@@ -57,6 +57,17 @@ public class CricketAnalyser {
         String sortedRunsData=new Gson().toJson(IPLCSVList);
         return sortedRunsData;
     }
+    public String getSortedStrikeRate() throws CricketAnalyserException {
+        if(IPLCSVList ==null || IPLCSVList.size() == 0) {
+            throw new CricketAnalyserException("No Census Data",CricketAnalyserException.ExceptionType.NO_CENSUS_DATA);
+        }
+
+        Comparator<IPLRunsCSV> IplCSVComparator=Comparator.comparing(census -> census.sr);
+        this.sort(IplCSVComparator);
+        Collections.reverse(IPLCSVList);
+        String sortedStrikeData=new Gson().toJson(IPLCSVList);
+        return sortedStrikeData;
+    }
     private  void sort(Comparator<IPLRunsCSV> IplCSVComparator) {
         for (int i=0; i<IPLCSVList.size()-1; i++){
             for (int j=0; j<IPLCSVList.size()-1; j++){
