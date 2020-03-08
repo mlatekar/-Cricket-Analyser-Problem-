@@ -60,6 +60,15 @@ public class CricketAnalyserTest {
         IPLRunsCSV[] topStrikeRateBy4sAnd6s = new Gson().fromJson(sortStrikeRateBy4sAnd6s, IPLRunsCSV[].class);
         Assert.assertEquals(204.81,topStrikeRateBy4sAnd6s[0].sr,0.0d);
     }
+
+    @Test
+    public void givenMostRunsData_WhenSorted_ShouldReturn_TopAveragesWithStrikeRates() {
+        cricketAnalyser.loadIPLRunsCSVData(IPL_RUNS_CENSUS_CSV_FILE_PATH);
+        String sortAverageWithStrikesRates=cricketAnalyser.getSortedData(SortField.AVERAGE);
+        IPLRunsCSV[] topAverageWithStrikesRates=new Gson().fromJson(sortAverageWithStrikesRates,IPLRunsCSV[].class);
+        Assert.assertEquals(134.62,topAverageWithStrikesRates[0].sr,0.0);
+    }
+
 }
 
 
