@@ -3,22 +3,24 @@ package cricketanalyser;
 import com.google.gson.Gson;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
+import org.apache.commons.collections.map.HashedMap;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 public class CricketAnalyser {
     List<IPLRunsCSV> IPLCSVList=null;
-   /* Map<String, IPLDTO> IPLCSVMap=null;
-    Map<SortField, Comparator<IPLDTO>> sortMap=null;*/
-
+    Map<SortField, Comparator<IPLRunsCSV>> sortMap=null;
 
     public CricketAnalyser() {
-        this.IPLCSVList = new ArrayList<>();
+       IPLCSVList=new ArrayList<>();
+       sortMap=new HashMap<>();
+       this.sortMap.put(SortField.AVERAGE,Comparator.comparing(IPL -> IPL.average));
+       this.sortMap.put(SortField.STRIKE_RATE,Comparator.comparing(IPL -> IPL.sr));
     }
 
     public int loadIPLRunsCSVData(String csvFilePath) throws CricketAnalyserException {
@@ -46,28 +48,17 @@ public class CricketAnalyser {
         System.out.println("Welcome to Cricket Analyser");
     }
 
-    public String getSortedRunsData() throws CricketAnalyserException {
+    public String getSortedData(SortField sortField) throws CricketAnalyserException {
         if(IPLCSVList ==null || IPLCSVList.size() == 0) {
             throw new CricketAnalyserException("No Census Data",CricketAnalyserException.ExceptionType.NO_CENSUS_DATA);
         }
 
-        Comparator<IPLRunsCSV> IplCSVComparator=Comparator.comparing(census -> census.average);
-        this.sort(IplCSVComparator);
+        sort(this.sortMap.get(sortField));
         Collections.reverse(IPLCSVList);
         String sortedRunsData=new Gson().toJson(IPLCSVList);
         return sortedRunsData;
     }
-    public String getSortedStrikeRate() throws CricketAnalyserException {
-        if(IPLCSVList ==null || IPLCSVList.size() == 0) {
-            throw new CricketAnalyserException("No Census Data",CricketAnalyserException.ExceptionType.NO_CENSUS_DATA);
-        }
 
-        Comparator<IPLRunsCSV> IplCSVComparator=Comparator.comparing(census -> census.sr);
-        this.sort(IplCSVComparator);
-        Collections.reverse(IPLCSVList);
-        String sortedStrikeData=new Gson().toJson(IPLCSVList);
-        return sortedStrikeData;
-    }
     private  void sort(Comparator<IPLRunsCSV> IplCSVComparator) {
         for (int i=0; i<IPLCSVList.size()-1; i++){
             for (int j=0; j<IPLCSVList.size()-1; j++){
