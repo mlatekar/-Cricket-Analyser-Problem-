@@ -69,6 +69,14 @@ public class CricketAnalyserTest {
         Assert.assertEquals(134.62,topAverageWithStrikesRates[0].sr,0.0);
     }
 
+    @Test
+    public void givenMostRunsData_WhenSorted_ShouldReturn_MaximumRunsWithBestAverage() {
+        cricketAnalyser.loadIPLRunsCSVData(IPL_RUNS_CENSUS_CSV_FILE_PATH);
+        String sortAverageWithStrikesRates=cricketAnalyser.getSortedData(SortField.AVERAGE);
+        IPLRunsCSV[] topAverageWithStrikesRates=new Gson().fromJson(sortAverageWithStrikesRates,IPLRunsCSV[].class);
+        Assert.assertEquals(416.0,topAverageWithStrikesRates[0].Runs,0.00d);
+    }
+
 }
 
 
