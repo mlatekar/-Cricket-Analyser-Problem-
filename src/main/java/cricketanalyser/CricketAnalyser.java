@@ -21,6 +21,7 @@ public class CricketAnalyser {
        sortMap=new HashMap<>();
        this.sortMap.put(SortField.AVERAGE,Comparator.comparing(IPL -> IPL.average));
        this.sortMap.put(SortField.STRIKE_RATE,Comparator.comparing(IPL -> IPL.sr));
+       this.sortMap.put(SortField.MAX6SAND4S,Comparator.comparing(IPL -> IPL.fourS+IPL.sixS));
     }
 
     public int loadIPLRunsCSVData(String csvFilePath) throws CricketAnalyserException {

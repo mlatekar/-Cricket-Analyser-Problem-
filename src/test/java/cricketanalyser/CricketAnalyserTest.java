@@ -12,7 +12,7 @@ public class CricketAnalyserTest {
 
     @BeforeClass
     public static void beforeClass() {
-         cricketAnalyser = new CricketAnalyser();
+        cricketAnalyser = new CricketAnalyser();
     }
 
     @Test
@@ -20,7 +20,7 @@ public class CricketAnalyserTest {
         try {
             int numOfRecords = cricketAnalyser.loadIPLRunsCSVData(IPL_RUNS_CENSUS_CSV_FILE_PATH);
             Assert.assertEquals(100, numOfRecords);
-          System.out.println(numOfRecords);
+            System.out.println(numOfRecords);
         } catch (CricketAnalyserException e) {
         }
     }
@@ -28,10 +28,10 @@ public class CricketAnalyserTest {
     @Test
     public void givenIPLRunsCSVFile_ShouldReturns_MostRuns() {
         try {
-             cricketAnalyser.loadIPLRunsCSVData(IPL_RUNS_CENSUS_CSV_FILE_PATH);
+            cricketAnalyser.loadIPLRunsCSVData(IPL_RUNS_CENSUS_CSV_FILE_PATH);
             String sortedRunsData = cricketAnalyser.getSortedData(SortField.AVERAGE);
-            IPLRunsCSV[] mostRuns=new Gson().fromJson(sortedRunsData, IPLRunsCSV[].class);
-            Assert.assertEquals(83.2, mostRuns[0].average,0.0d);
+            IPLRunsCSV[] mostRuns = new Gson().fromJson(sortedRunsData, IPLRunsCSV[].class);
+            Assert.assertEquals(83.2, mostRuns[0].average, 0.0d);
             System.out.println(mostRuns);
         } catch (CricketAnalyserException e) {
         }
@@ -42,7 +42,15 @@ public class CricketAnalyserTest {
         cricketAnalyser.loadIPLRunsCSVData(IPL_RUNS_CENSUS_CSV_FILE_PATH);
         String sortedStrikeRate = cricketAnalyser.getSortedData(SortField.STRIKE_RATE);
         IPLRunsCSV[] topStrikeRate = new Gson().fromJson(sortedStrikeRate, IPLRunsCSV[].class);
-        Assert.assertEquals(333.33,topStrikeRate[0].sr,0.0d);
+        Assert.assertEquals(333.33, topStrikeRate[0].sr, 0.0d);
+    }
+
+    @Test
+    public void givenIPLRunsCsvFile_ShouldReturn_WhoHits_Maximum4sAnd6s() {
+        cricketAnalyser.loadIPLRunsCSVData(IPL_RUNS_CENSUS_CSV_FILE_PATH);
+        String sortMax4sAnd6s = cricketAnalyser.getSortedData(SortField.MAX6SAND4S);
+        IPLRunsCSV[] topMax4sAnd6s = new Gson().fromJson(sortMax4sAnd6s, IPLRunsCSV[].class);
+        Assert.assertEquals(83, topMax4sAnd6s[0].fourS + topMax4sAnd6s[0].sixS);
     }
 }
 

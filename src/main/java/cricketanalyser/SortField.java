@@ -1,5 +1,5 @@
 package cricketanalyser;
 
 public enum SortField {
-    AVERAGE,STRIKE_RATE
+    AVERAGE, MAX6SAND4S, STRIKE_RATE
 }
