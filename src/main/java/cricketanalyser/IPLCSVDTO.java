@@ -9,11 +9,11 @@ public class IPLCSVDTO {
     public  int fourS;
     public  int sixS;
     public  int Runs;
-    public String PLAYER;
+    public String player;
 
     public IPLCSVDTO(IPLRunsCSV iplRunsCSV) {
 
-        PLAYER=iplRunsCSV.player;
+        player=iplRunsCSV.player;
         average = iplRunsCSV.average;
         SR = iplRunsCSV.SR;
         fourS = iplRunsCSV.fourS;
@@ -22,7 +22,7 @@ public class IPLCSVDTO {
     }
     public IPLCSVDTO(IPLWicketsCSV iplWicketsCSV) {
 
-        PLAYER=iplWicketsCSV.player;
+        player=iplWicketsCSV.player;
         average = iplWicketsCSV.average;
         SR = iplWicketsCSV.SR;
     }

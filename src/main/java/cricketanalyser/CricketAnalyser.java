@@ -1,16 +1,7 @@
 package cricketanalyser;
 
-import com.censusjar.CSVBuilderFactory;
-import com.censusjar.ICSVBuilder;
 import com.google.gson.Gson;
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
-import org.apache.commons.collections.map.HashedMap;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -19,18 +10,27 @@ public class CricketAnalyser {
     List<IPLCSVDTO> IPLCSVList=null;
     Map<String,IPLCSVDTO> IPLMap=null;
     Map<SortField, Comparator<IPLCSVDTO>> sortMap=null;
+    public enum IPLCsvFile {IPLRuns,IPLWicket};
 
     public CricketAnalyser() {
         IPLMap=new HashMap<>();
        IPLCSVList=new ArrayList<>();
        sortMap=new HashMap<>();
-       this.sortMap.put(SortField.AVERAGE,Comparator.comparing(IPL -> IPL.average));
-       this.sortMap.put(SortField.STRIKE_RATE,Comparator.comparing(IPL -> IPL.SR));
-       this.sortMap.put(SortField.MAX6SAND4S,Comparator.comparing(IPL -> IPL.fourS+IPL.sixS));
-       this.sortMap.put(SortField.RUNS,Comparator.comparing(IPL -> IPL.Runs));
+       this.sortMap.put(SortField.AVERAGE, Comparator.comparing(IPL ->IPL.average));
+        this.sortMap.put(SortField.AVERAGEWITHSTRKIERATE, Comparator.comparing(IPL ->IPL.average));
+       this.sortMap.put(SortField.STRIKE_RATE, Comparator.comparing(IPL -> IPL.SR));
+       this.sortMap.put(SortField.MAX6SAND4S, Comparator.comparing(IPL -> IPL.fourS+IPL.sixS));
+       Comparator<IPLCSVDTO> comparator=Comparator.comparing(IPL -> IPL.fourS+IPL.sixS);
+       this.sortMap.put(SortField.TOTALSIXANDFOR,comparator.thenComparing(IPL -> IPL.fourS+IPL.sixS));
+       this.sortMap.put(SortField.RUNS, Comparator.comparing(IPL -> IPL.Runs));
       }
 
-    public int loadIPLRunsCSVData(String csvFilePath) throws CricketAnalyserException {
+    public int loadCensusData(IPLCsvFile csvFile, String... csvFilePath) throws CricketAnalyserException {
+        IPLMap=IPLAdapterFactory.getCensusData(csvFile,csvFilePath);
+        return IPLMap.size();
+    }
+
+/*    public int loadIPLRunsCSVData(String csvFilePath) throws CricketAnalyserException {
         try(Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
 
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
@@ -61,13 +61,16 @@ public class CricketAnalyser {
             throw new CricketAnalyserException(e.getMessage(),
                     CricketAnalyserException.ExceptionType.IPL_CENSUS_FILE_PROBLEM);
         }
-    }
+    }*/
 
-    public static void main(String []args) {
+  /*  public static void main(String []args) {
         System.out.println("Welcome to Cricket Analyser");
-    }
+    }*/
 
-    public String getSortedData(SortField sortField) throws CricketAnalyserException {
+    public String getSortedData(SortField sortField) {
+
+        IPLCSVList=IPLMap.values().stream().collect(Collectors.toList());
+
         if(IPLCSVList ==null || IPLCSVList.size() == 0) {
             throw new CricketAnalyserException("No Census Data",CricketAnalyserException.ExceptionType.NO_CENSUS_DATA);
         }
