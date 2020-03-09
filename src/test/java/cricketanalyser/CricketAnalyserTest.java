@@ -112,6 +112,14 @@ public class CricketAnalyserTest {
         Assert.assertEquals("Krishnappa Gowtham",topBowlingAverage[0].player);
     }
 
+    @Test
+    public void givenMostWicketsData_WhenSorted_ShouldReturn_MaximumWickets_withBestAverage() {
+        cricketAnalyser.loadCensusData(CricketAnalyser.IPLCsvFile.IPLWicket,IPL_WICKETS_CENSUS_CSV_FILE_PATH);
+        String sortedData = cricketAnalyser.getSortedData(SortField.MAXIMUMWICKETWITHAVERAGE);
+        IPLWicketsCSV[] topBowlingAverage=new Gson().fromJson(sortedData,IPLWicketsCSV[].class);
+        Assert.assertEquals("Imran Tahir",topBowlingAverage[0].player);
+    }
+
 }
 
 

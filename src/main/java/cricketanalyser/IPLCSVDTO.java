@@ -13,6 +13,7 @@ public class IPLCSVDTO {
     public double econ;
     public int fourW;
     public int fiveW;
+    public  int wickets;
 
     public IPLCSVDTO(IPLRunsCSV iplRunsCSV) {
 
@@ -31,5 +32,6 @@ public class IPLCSVDTO {
         econ = iplWicketsCSV.econ;
         fiveW= iplWicketsCSV.fiveW;
         fourW = iplWicketsCSV.fourW;
+        wickets=iplWicketsCSV.wickets;
     }
 }

@@ -35,6 +35,7 @@ public class CricketAnalyser {
         this.sortMap.put(SortField.TOTAL4W5W,bestStrikeRateWith4w5w.thenComparing(IPL -> IPL.SR));
 
         this.sortMap.put(SortField.BESTAVERAGE, Comparator.comparing(IPL ->IPL.average));
+        this.sortMap.put(SortField.MAXIMUMWICKETWITHAVERAGE, Comparator.comparing(IPL ->IPL.wickets));
 
       }
 
