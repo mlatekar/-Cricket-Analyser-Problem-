@@ -11,6 +11,8 @@ public class IPLCSVDTO {
     public  int Runs;
     public String player;
     public double econ;
+    public int fourW;
+    public int fiveW;
 
     public IPLCSVDTO(IPLRunsCSV iplRunsCSV) {
 
@@ -27,5 +29,7 @@ public class IPLCSVDTO {
         average = iplWicketsCSV.average;
         SR = iplWicketsCSV.SR;
         econ = iplWicketsCSV.econ;
+        fiveW= iplWicketsCSV.fiveW;
+        fourW = iplWicketsCSV.fourW;
     }
 }

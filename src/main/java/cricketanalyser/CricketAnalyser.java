@@ -18,12 +18,21 @@ public class CricketAnalyser {
        sortMap=new HashMap<>();
        this.sortMap.put(SortField.AVERAGE, Comparator.comparing(IPL ->IPL.average));
         this.sortMap.put(SortField.AVERAGEWITHSTRKIERATE, Comparator.comparing(IPL ->IPL.average));
+
        this.sortMap.put(SortField.STRIKE_RATE, Comparator.comparing(IPL -> IPL.SR));
+
        this.sortMap.put(SortField.MAX6SAND4S, Comparator.comparing(IPL -> IPL.fourS+IPL.sixS));
        Comparator<IPLCSVDTO> comparator=Comparator.comparing(IPL -> IPL.fourS+IPL.sixS);
        this.sortMap.put(SortField.TOTALSIXANDFOR,comparator.thenComparing(IPL -> IPL.fourS+IPL.sixS));
+
+
        this.sortMap.put(SortField.RUNS, Comparator.comparing(IPL -> IPL.Runs));
         this.sortMap.put(SortField.EconomyRate, Comparator.comparing(IPL -> IPL.econ));
+
+
+        this.sortMap.put(SortField.BESTSTRIKE, Comparator.comparing(IPL -> IPL.fourW+IPL.fiveW));
+        Comparator<IPLCSVDTO> bestStrikeRateWith4w5w=Comparator.comparing(IPL -> IPL.fourW+IPL.fiveW);
+        this.sortMap.put(SortField.TOTAL4W5W,bestStrikeRateWith4w5w.thenComparing(IPL -> IPL.SR));
       }
 
     public int loadCensusData(IPLCsvFile csvFile, String... csvFilePath) throws CricketAnalyserException {

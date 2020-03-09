@@ -96,6 +96,14 @@ public class CricketAnalyserTest {
         Assert.assertEquals("Ben Cutting",topBowlingAverage[0].player);
     }
 
+    @Test
+    public void givenMostWicketsData_WhenSorted_ShouldReturn_BestStrikeRater_With4wAnd5w() {
+        cricketAnalyser.loadCensusData(CricketAnalyser.IPLCsvFile.IPLWicket,IPL_WICKETS_CENSUS_CSV_FILE_PATH);
+        String sortedData = cricketAnalyser.getSortedData(SortField.TOTAL4W5W);
+        IPLWicketsCSV[] topBowlingAverage=new Gson().fromJson(sortedData,IPLWicketsCSV[].class);
+        Assert.assertEquals("Lasith Malinga",topBowlingAverage[0].player);
+    }
+
 }
 
 
