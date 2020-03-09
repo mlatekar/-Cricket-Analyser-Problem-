@@ -12,4 +12,7 @@ public class IPLWicketsCSV {
 
     @CsvBindByName(column = "SR", required = true)
     public double SR;
+    @CsvBindByName(column = "Econ", required = true)
+    public double econ;
+
 }

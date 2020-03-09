@@ -23,6 +23,7 @@ public class CricketAnalyser {
        Comparator<IPLCSVDTO> comparator=Comparator.comparing(IPL -> IPL.fourS+IPL.sixS);
        this.sortMap.put(SortField.TOTALSIXANDFOR,comparator.thenComparing(IPL -> IPL.fourS+IPL.sixS));
        this.sortMap.put(SortField.RUNS, Comparator.comparing(IPL -> IPL.Runs));
+        this.sortMap.put(SortField.EconomyRate, Comparator.comparing(IPL -> IPL.econ));
       }
 
     public int loadCensusData(IPLCsvFile csvFile, String... csvFilePath) throws CricketAnalyserException {

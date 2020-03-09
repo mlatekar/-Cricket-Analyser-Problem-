@@ -28,7 +28,6 @@ public class CricketAnalyserTest {
             String sortedRunsData = cricketAnalyser.getSortedData(SortField.AVERAGE);
             IPLRunsCSV[] mostRuns = new Gson().fromJson(sortedRunsData, IPLRunsCSV[].class);
             Assert.assertEquals("MS Dhoni", mostRuns[0].player);
-            System.out.println(mostRuns);
         } catch (CricketAnalyserException e) {
         }
     }
@@ -88,6 +87,15 @@ public class CricketAnalyserTest {
         IPLWicketsCSV[] topBowlingAverage=new Gson().fromJson(sortedData,IPLWicketsCSV[].class);
         Assert.assertEquals("Krishnappa Gowtham",topBowlingAverage[0].player);
     }
+
+    @Test
+    public void givenMostWicketsData_WhenSorted_ShouldReturn_BestEconomyRate() {
+        cricketAnalyser.loadCensusData(CricketAnalyser.IPLCsvFile.IPLWicket,IPL_WICKETS_CENSUS_CSV_FILE_PATH);
+        String sortedData = cricketAnalyser.getSortedData(SortField.EconomyRate);
+        IPLWicketsCSV[] topBowlingAverage=new Gson().fromJson(sortedData,IPLWicketsCSV[].class);
+        Assert.assertEquals("Ben Cutting",topBowlingAverage[0].player);
+    }
+
 }
 
 
