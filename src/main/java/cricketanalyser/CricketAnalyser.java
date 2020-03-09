@@ -33,6 +33,9 @@ public class CricketAnalyser {
         this.sortMap.put(SortField.BESTSTRIKE, Comparator.comparing(IPL -> IPL.fourW+IPL.fiveW));
         Comparator<IPLCSVDTO> bestStrikeRateWith4w5w=Comparator.comparing(IPL -> IPL.fourW+IPL.fiveW);
         this.sortMap.put(SortField.TOTAL4W5W,bestStrikeRateWith4w5w.thenComparing(IPL -> IPL.SR));
+
+        this.sortMap.put(SortField.BESTAVERAGE, Comparator.comparing(IPL ->IPL.average));
+
       }
 
     public int loadCensusData(IPLCsvFile csvFile, String... csvFilePath) throws CricketAnalyserException {
