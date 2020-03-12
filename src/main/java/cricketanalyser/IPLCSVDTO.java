@@ -12,7 +12,7 @@ public class IPLCSVDTO {
     public double econ;
     public int fourW;
     public int fiveW;
-    public  int wickets;
+    public double wickets;
     public int mostWickets;
     //public double bowlerAverage;
 
