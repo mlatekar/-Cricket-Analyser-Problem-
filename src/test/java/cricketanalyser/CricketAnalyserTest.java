@@ -120,6 +120,15 @@ public class CricketAnalyserTest {
         Assert.assertEquals("Imran Tahir",topBowlingAverage[0].player);
     }
 
+    @Test
+    public void givenIPLData_RunsAndWickets_WhenSorted_ShouldReturn_BestBowlingAnd_BestBattingAverage() {
+        cricketAnalyser.loadCensusData(CricketAnalyser.IPLCsvFile.AllRounderPlayer,IPL_RUNS_CENSUS_CSV_FILE_PATH,IPL_WICKETS_CENSUS_CSV_FILE_PATH);
+        String runsAverage = cricketAnalyser.getSortedData(SortField.MAX_AVERAGE);
+        System.out.println(runsAverage);
+        IPLCSVDTO[] iplRunsCSV = new Gson().fromJson(runsAverage, IPLCSVDTO[].class);
+        Assert.assertEquals("Marcus Stoinis",iplRunsCSV[0].player);
+    }
+
 }
 
 

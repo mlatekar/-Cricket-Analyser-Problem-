@@ -11,6 +11,9 @@ public class IPLAdapterFactory {
         if (csvFile.equals(CricketAnalyser.IPLCsvFile.IPLWicket)) {
             return new IPLWicketsAdapter().loadCensusData(csvFilePath);
         }
+        if(csvFile.equals(CricketAnalyser.IPLCsvFile.AllRounderPlayer)){
+            return new AllRounder().loadCensusData(csvFilePath);
+        }
         throw new CricketAnalyserException("Incorrect File name",
                 CricketAnalyserException.ExceptionType.IPL_CENSUS_FILE_NOT_FOUND);
     }

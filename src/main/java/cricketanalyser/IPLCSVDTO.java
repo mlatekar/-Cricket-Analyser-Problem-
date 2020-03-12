@@ -1,10 +1,9 @@
 package cricketanalyser;
-
-import com.opencsv.bean.CsvBindByName;
-
 public class IPLCSVDTO {
 
     public double average;
+    public double bowlingaverage;
+    public double battingaverage;
     public  double SR;
     public  int fourS;
     public  int sixS;
@@ -14,11 +13,14 @@ public class IPLCSVDTO {
     public int fourW;
     public int fiveW;
     public  int wickets;
+    public int mostWickets;
+    //public double bowlerAverage;
 
     public IPLCSVDTO(IPLRunsCSV iplRunsCSV) {
 
         player=iplRunsCSV.player;
         average = iplRunsCSV.average;
+        battingaverage = iplRunsCSV.average;
         SR = iplRunsCSV.SR;
         fourS = iplRunsCSV.fourS;
         sixS = iplRunsCSV.sixS;

@@ -21,7 +21,7 @@ public abstract class IPLAdapter {
         Map<String, IPLCSVDTO> censusCSVMap = new HashMap<>();
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-            Iterator<E> censusCSVIterator = csvBuilder.getCSVIterator(reader, csvClass);
+            Iterator<E> censusCSVIterator = csvBuilder.getCSVIterator(reader,csvClass);
             Iterable<E> censusCodeIterable = () -> censusCSVIterator;
             if (csvClass.getName().equals("cricketanalyser.IPLRunsCSV")) {
                 StreamSupport.stream(censusCodeIterable.spliterator(), false)

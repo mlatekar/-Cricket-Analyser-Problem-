@@ -10,7 +10,7 @@ public class CricketAnalyser {
     List<IPLCSVDTO> IPLCSVList=null;
     Map<String,IPLCSVDTO> IPLMap=null;
     Map<SortField, Comparator<IPLCSVDTO>> sortMap=null;
-    public enum IPLCsvFile {IPLRuns,IPLWicket};
+    public enum IPLCsvFile {IPLRuns,IPLWicket,AllRounderPlayer};
 
     public CricketAnalyser() {
         IPLMap=new HashMap<>();
@@ -36,51 +36,13 @@ public class CricketAnalyser {
 
         this.sortMap.put(SortField.BESTAVERAGE, Comparator.comparing(IPL ->IPL.average));
         this.sortMap.put(SortField.MAXIMUMWICKETWITHAVERAGE, Comparator.comparing(IPL ->IPL.wickets));
-
+        this.sortMap.put(SortField.MAX_AVERAGE,new ComparatorBowlingBatting());
       }
 
     public int loadCensusData(IPLCsvFile csvFile, String... csvFilePath) throws CricketAnalyserException {
         IPLMap=IPLAdapterFactory.getCensusData(csvFile,csvFilePath);
         return IPLMap.size();
     }
-
-/*    public int loadIPLRunsCSVData(String csvFilePath) throws CricketAnalyserException {
-        try(Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
-
-            ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-            Iterator<IPLRunsCSV> IPLCSVIterator = csvBuilder.getCSVIterator(reader, IPLRunsCSV.class);
-            while (IPLCSVIterator.hasNext()) {
-                IPLRunsCSV iplRunsCSV=IPLCSVIterator.next();
-                this.IPLMap.put(iplRunsCSV.player,new IPLCSVDTO(iplRunsCSV));
-            }
-            IPLCSVList=IPLMap.values().stream().collect(Collectors.toList());
-            return IPLCSVList.size();
-        } catch (IOException e) {
-            throw new CricketAnalyserException(e.getMessage(),
-                    CricketAnalyserException.ExceptionType.IPL_CENSUS_FILE_PROBLEM);
-        }
-    }
-    public int loadIPLWicketsCSVData(String csvFilePath) throws CricketAnalyserException {
-        try(Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
-
-            ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-            Iterator<IPLWicketsCSV> IPLCSVIterator = csvBuilder.getCSVIterator(reader, IPLWicketsCSV.class);
-            while (IPLCSVIterator.hasNext()) {
-                IPLWicketsCSV iplWicketsCSV=IPLCSVIterator.next();
-                this.IPLMap.put(iplWicketsCSV.player,new IPLCSVDTO(iplWicketsCSV));
-            }
-            IPLCSVList=IPLMap.values().stream().collect(Collectors.toList());
-            return IPLCSVList.size();
-        } catch (IOException e) {
-            throw new CricketAnalyserException(e.getMessage(),
-                    CricketAnalyserException.ExceptionType.IPL_CENSUS_FILE_PROBLEM);
-        }
-    }*/
-
-  /*  public static void main(String []args) {
-        System.out.println("Welcome to Cricket Analyser");
-    }*/
-
     public String getSortedData(SortField sortField) {
 
         IPLCSVList=IPLMap.values().stream().collect(Collectors.toList());
@@ -90,7 +52,7 @@ public class CricketAnalyser {
         }
 
       //  sort(this.sortMap.get(sortField));
-        this.sort(this.sortMap.get(sortField));
+        this.sort(sortMap.get(sortField));
         Collections.reverse(IPLCSVList);
         String sortedRunsData=new Gson().toJson(IPLCSVList);
         return sortedRunsData;
@@ -98,7 +60,7 @@ public class CricketAnalyser {
 
     private  void sort(Comparator<IPLCSVDTO> IplCSVComparator) {
         for (int i=0; i<this.IPLCSVList.size()-1; i++){
-            for (int j=0; j<this.IPLCSVList.size()-1; j++){
+            for (int j=0; j<this.IPLCSVList.size()-i-1; j++){
                 IPLCSVDTO census1=this.IPLCSVList.get(j);
                 IPLCSVDTO census2=this.IPLCSVList.get(j+1);
                 if (IplCSVComparator.compare(census1,census2)>0) {
