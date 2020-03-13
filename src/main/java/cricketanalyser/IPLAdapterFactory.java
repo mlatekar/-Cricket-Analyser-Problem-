@@ -4,20 +4,20 @@ import java.util.Map;
 
 public class IPLAdapterFactory {
 
-    public static Map<String, IPLCSVDTO> getCensusData(CricketAnalyser.IPLCsvFile csvFile, String... csvFilePath) {
+    public static Map<String, IPLCSVDTO> getIPLData(CricketAnalyser.IPLCsvFile csvFile, String... csvFilePath) {
         if (csvFile.equals(CricketAnalyser.IPLCsvFile.IPLRuns)) {
-            return new IPLRunsAdapter().loadCensusData(csvFilePath);
+            return new IPLRunsAdapter().loadIPLData(csvFilePath);
         }
         if (csvFile.equals(CricketAnalyser.IPLCsvFile.IPLWicket)) {
-            return new IPLWicketsAdapter().loadCensusData(csvFilePath);
+            return new IPLWicketsAdapter().loadIPLData(csvFilePath);
         }
-        if(csvFile.equals(CricketAnalyser.IPLCsvFile.AllRounderPlayer)){
-            return new AllRounder().loadCensusData(csvFilePath);
+       /* if (csvFile.equals(CricketAnalyser.IPLCsvFile.AllRounderPlayer)) {
+            return new AllRounder().loadIPLData(csvFilePath);
         }
-        if(csvFile.equals(CricketAnalyser.IPLCsvFile.AllRounder)){
-            return new BestAllRounder().loadCensusData(csvFilePath);
-        }
+        if (csvFile.equals(CricketAnalyser.IPLCsvFile.AllRounder)) {
+            return new BestAllRounder().loadIPLData(csvFilePath);
+        }*/
         throw new CricketAnalyserException("Incorrect File name",
-                CricketAnalyserException.ExceptionType.IPL_CENSUS_FILE_NOT_FOUND);
+                CricketAnalyserException.ExceptionType.WRONG_FIle);
     }
 }
